@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "name": "nginx-container-crictl"
+  },
+  "image": {
+    "image": "nginx:alpine"
+  },
+  "command": [],
+  "args": [],
+  "working_dir": "/",
+  "stdin": false,
+  "stdin_once": false,
+  "tty": false,
+  "log_path": "nginx.log",
+  "linux": {
+    "resources": {}
+  },
+  "ports": [
+    {
+      "container_port": 80,
+      "protocol": "TCP"
+    }
+  ],
+  "mounts": [
+    {
+      "container_path": "/usr/share/nginx/html",
+      "host_path": "~/nginx-data/",
+      "read_only": false
+    }
+  ]
+}

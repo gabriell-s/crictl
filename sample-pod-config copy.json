@@ -1,0 +1,10 @@
+{
+  "metadata": {
+    "name": "nginx-pod-crictl",
+    "namespace": "default",
+    "uid": "nginx-test",
+    "attempt": 1
+  },
+  "log_directory": "/tmp",
+  "linux": {}
+}

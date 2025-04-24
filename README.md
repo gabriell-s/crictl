@@ -111,51 +111,52 @@ crictl exec <container-id> <comando> # Executa um comando dentro do container (s
 
 ### Capturas de Tela ou Saídas Esperadas
 
+
 ```bash
 ➜  crictl pull nginx:alpine
 Image is up to date for docker.io/library/nginx@sha256:62223d644fa234c3a1cc785ee14242ec47a77364226f1c811d2f669f96dc2ac8
 ```
-
+![Pull do nginx](images/pull.png)
 ```bash
 ➜  crictl runp pod-config.json
 0df9ef97922afa22c7eea146e9345c5b8aacb0e79524f1129fb43dfa882372d3
 ```
-
+![Criando pod](images/runp.png)
 ```bash
 ➜  crictl pods                
 POD ID              CREATED             STATE               NAME                NAMESPACE           ATTEMPT             RUNTIME
 0df9ef97922af       50 seconds ago      Ready               nginx-pod-crictl    default             1                   (default)
 ```
-
+![Listando pods](images/pods.png)
 ```bash
 ➜  crictl create 0df9ef97922af container-config.json pod-config.json
 336033a57c3e1c34b091edb5f0bf05ed1f60c7de1e24aa4cdd8ef4ce1ba6068b
 ```
-
+![Criando container](images/create.png)
 ```bash
 ➜  crictl ps -a
 CONTAINER           IMAGE               CREATED              STATE               NAME                     ATTEMPT             POD ID              POD                 NAMESPACE
 336033a57c3e1       nginx:alpine        About a minute ago   Created             nginx-container-crictl   0                   0df9ef97922af       unknown             unknown
 ```
-
+![Listando todos os containers](images/ps -a.png)
 ```bash
 ➜  crictl start 336033a57c3e1
 336033a57c3e1
 ```
-
+![Iniciando o container](images/start.png)
 ```bash
 ➜  crictl ps                 
 CONTAINER           IMAGE               CREATED             STATE               NAME                     ATTEMPT             POD ID              POD                 NAMESPACE
 336033a57c3e1       nginx:alpine        4 minutes ago       Running             nginx-container-crictl   0                   0df9ef97922af       unknown             unknown
 ```
-
+![Listando os containers iniciados](images/ps.png)
 ```bash
 ➜  CONTAINER_IP=$(crictl inspect 336033a57c3e1 | jq -r '.info.runtimeSpec.annotations."io.kubernetes.cri-o.IP.0"')
 ➜  echo "🌐 Testando acesso ao servidor NGINX via http://$CONTAINER_IP:80"
 
 🌐 Testando acesso ao servidor NGINX via http://10.85.0.38:80
 ```
-
+![Pegando o IP](images/container_ip.png)
 ```bash
 ➜  curl http://10.85.0.38:80
 <!DOCTYPE html>
@@ -170,15 +171,19 @@ CONTAINER           IMAGE               CREATED             STATE               
   </body>
 </html>
 ```
-
+![Testando o servidor](images/curl.png)
 ```bash
 ➜  crictl ps 
 ➜  crictl stop 336033a57c3e1
 crictl stopp 0df9ef97922af
 crictl rm 336033a57c3e1
 crictl rmp 0df9ef97922af
+336033a57c3e1
+Stopped sandbox 0df9ef97922af
+336033a57c3e1
+Removed sandbox 0df9ef97922af
 ```
-
+![Parando e removendo pod e container](images/stop_rm.png)
 ---
 
 ## Comparação com Docker
@@ -224,5 +229,3 @@ kubectl apply -f nginx-service.yaml # Execução
 
 kubectl port-forward service/nginx-service 8080:80 -n default # Mapeamento da porta
 ```
-
-![Exemplo](images/container_ip.png)
